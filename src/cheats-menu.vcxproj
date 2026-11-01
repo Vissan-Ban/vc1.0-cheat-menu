@@ -44,7 +44,7 @@
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>$(PluginSdkDir)\output\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>Plugin_VC_d.lib;Paths.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>Plugin_VC_d.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
