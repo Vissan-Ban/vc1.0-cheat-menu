@@ -402,7 +402,7 @@ void CMenuSystem::DisplayMenu() {
             }
             else if (MenuSystem.lineID == 1 && ActiveKey) {
                 MenuSystem.bEnableDebugMenu = 0;
-                CTimer::ms_fTimeScale = 1.5f;
+                CTimer::ms_fTimeScale = 1.0f;
 
                 CHud::SetHelpMessage((const GtaChar*)L"Time Normal Enabled", 0, 0, 1);
             }
