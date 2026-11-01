@@ -23,7 +23,7 @@ jobs:
         uses: actions/checkout@v4
         with:
           repository: DK22Pac/plugin-sdk
-          ref: master
+          ref: 15f15b60bbf74c106e1b496ff92c98764abf4605
           path: plugin-sdk
           submodules: recursive
 
