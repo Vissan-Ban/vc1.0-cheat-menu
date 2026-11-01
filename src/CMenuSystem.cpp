@@ -324,7 +324,7 @@ void CMenuSystem::DisplayMenu() {
                 CStreaming::RequestModel(280, 1);
                 CStreaming::RequestModel(286, 1);
                 CStreaming::RequestModel(287, 1);
-                CStreaming::LoadAllRequestedModels(0, 0);
+                CStreaming::LoadAllRequestedModels(false);
                 FindPlayerPed()->GiveWeapon((eWeaponType)10, 0, 1);
                 FindPlayerPed()->GiveWeapon((eWeaponType)13, 10, 1);
                 FindPlayerPed()->GiveWeapon((eWeaponType)18, 40, 1);
@@ -354,7 +354,7 @@ void CMenuSystem::DisplayMenu() {
                 CStreaming::RequestModel(286, 1);
                 CStreaming::RequestModel(290, 1);
                 CStreaming::RequestModel(294, 1);
-                CStreaming::LoadAllRequestedModels(0, 0);
+                CStreaming::LoadAllRequestedModels(false);
                 FindPlayerPed()->GiveWeapon((eWeaponType)11, 0, 1);
                 FindPlayerPed()->GiveWeapon((eWeaponType)12, 10, 1);
                 FindPlayerPed()->GiveWeapon((eWeaponType)18, 40, 1);
