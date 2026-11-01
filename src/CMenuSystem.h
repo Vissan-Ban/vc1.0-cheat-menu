@@ -14,12 +14,6 @@ enum ePageID {
     MISC
 };
 
-enum eFontStyle : unsigned __int8 {
-    FONT_RAGE,
-    FONT_SUBTITLES,
-    FONT_PRICEDOWN
-};
-
 class CMenuSystem {
 public:
     int lineID;
