@@ -28,8 +28,6 @@ void CMenuSystem::InjectPatches() {
     plugin::Events::drawHudEvent += [] {
         CMenuSystem::DisplayMenu();
         CMenuSystem::DrawPermanentText();
-        CMenuSystem::AirbreakMode();
-        CMenuSystem::SetTime();
     };
 }
 
@@ -45,7 +43,7 @@ void CMenuSystem::DisplayMenu() {
 
     // ID: 1 - 9 Where 1 is first menu option.
     wchar_t* Page1Lines[10]{ L"Get Weapon Set 1", L"Get Weapon Set 2", L"Get Weapon Set 3", L"Unused", L"Unused", L"Unused", L"Unused", L"Unused", L"Unused", L"Unused"};
-    wchar_t* Page3Lines[10]{ L"Faster", L"Normal", L"Slower", L"Time Stopper", L"Unused", L"Unused", L"Unused", L"Unused", L"Unused", L"Unused" };
+    wchar_t* Page3Lines[10]{ L"Faster", L"Normal", L"Slower", L"Unused", L"Unused", L"Unused", L"Unused", L"Unused", L"Unused", L"Unused" };
     wchar_t* Page9Lines[10]{ L"Show player coords", L"Unused", L"Unused", L"Unused", L"Unused", L"Unused", L"Unused", L"Unused", L"Unused", L"Unused" };
 
     char EnableKey = plugin::KeyPressed(VK_F4);
@@ -54,7 +52,7 @@ void CMenuSystem::DisplayMenu() {
     if (FrontendMenuManager.m_bMenuVisible)
         MenuSystem.bEnableDebugMenu = 0;
 
-    if (!MenuSystem.bEnableDebugMenu && EnableKey && !MenuSystem.bEnableTimeStopper && CTimer::m_snTimeInMilliseconds > (nTimeMenu + 1000)) {
+    if (!MenuSystem.bEnableDebugMenu && EnableKey && CTimer::m_snTimeInMilliseconds > (nTimeMenu + 1000)) {
         MenuSystem.bEnableDebugMenu = 1;
         nTimeMenu = CTimer::m_snTimeInMilliseconds;
     }
@@ -313,7 +311,7 @@ void CMenuSystem::DisplayMenu() {
                 CStreaming::SetModelIsDeletable(276);
                 CStreaming::SetModelIsDeletable(285);
                 MenuSystem.bEnableDebugMenu = 0;
-                CHud::SetHelpMessage((const GtaChar*)L"Weapon Set 1 received", 1, 0, 1);
+                CHud::SetHelpMessage(L"Weapon Set 1 received", 1 != 0, 0 != 0);
             }
 
             if (MenuSystem.lineID == 1 && ActiveKey) {
@@ -343,7 +341,7 @@ void CMenuSystem::DisplayMenu() {
                 CStreaming::SetModelIsDeletable(283);
                 CStreaming::SetModelIsDeletable(280);
                 MenuSystem.bEnableDebugMenu = 0;
-                CHud::SetHelpMessage((const GtaChar*)L"Weapon Set 2 received", 1, 0, 1);
+                CHud::SetHelpMessage(L"Weapon Set 2 received", 1 != 0, 0 != 0);
             }
 
             if (MenuSystem.lineID == 2 && ActiveKey) {
@@ -374,7 +372,7 @@ void CMenuSystem::DisplayMenu() {
                 CStreaming::SetModelIsDeletable(286);
                 CStreaming::SetModelIsDeletable(290);
                 MenuSystem.bEnableDebugMenu = 0;
-                CHud::SetHelpMessage((const GtaChar*)L"Weapon Set 3 received", 1, 0, 1);
+                CHud::SetHelpMessage(L"Weapon Set 3 received", 1 != 0, 0 != 0);
             }
 
         }
@@ -398,32 +396,26 @@ void CMenuSystem::DisplayMenu() {
                 MenuSystem.bEnableDebugMenu = 0;
                 CTimer::ms_fTimeScale = 1.5f;
 
-                CHud::SetHelpMessage((const GtaChar*)L"Time Faster Enabled", 0, 0, 1);
+                CHud::SetHelpMessage(L"Time Faster Enabled", 0 != 0, 0 != 0);
             }
             else if (MenuSystem.lineID == 1 && ActiveKey) {
                 MenuSystem.bEnableDebugMenu = 0;
                 CTimer::ms_fTimeScale = 1.0f;
 
-                CHud::SetHelpMessage((const GtaChar*)L"Time Normal Enabled", 0, 0, 1);
+                CHud::SetHelpMessage(L"Time Normal Enabled", 0 != 0, 0 != 0);
             }
             else if (MenuSystem.lineID == 2 && ActiveKey) {
                 MenuSystem.bEnableDebugMenu = 0;
                 CTimer::ms_fTimeScale = 0.5f;
 
-                CHud::SetHelpMessage((const GtaChar*)L"Time Slower Enabled", 0, 0, 1);
+                CHud::SetHelpMessage(L"Time Slower Enabled", 0 != 0, 0 != 0);
 
-            }
-            else if (MenuSystem.lineID == 3 && ActiveKey) {
-                MenuSystem.bEnableTimeStopper = 1;
-                MenuSystem.bEnableDebugMenu = 0;
-
-                CHud::SetMessage((const GtaChar*)L"Timer Stopper Enabled");
             }
             /*else if (MenuSystem.lineID == 4 && ActiveKey) {
                 MenuSystem.bEnableSetTime = 1;
                 MenuSystem.bEnableDebugMenu = 0;
 
-                CHud::SetHelpMessage((const GtaChar*)L"Use the LEFT and RIGHT ARROWS to change the hour, the UP and DOWN ARROWS, to set the minutes, and SHIFT to advance the day. Press RETURN when done.", 0, 1, 1);
+                CHud::SetHelpMessage(L"Use the LEFT and RIGHT ARROWS to change the hour, the UP and DOWN ARROWS, to set the minutes, and SHIFT to advance the day. Press RETURN when done.", 0 != 0, 1 != 0);
             }*/
         }
         // End Page 3
@@ -447,13 +439,13 @@ void CMenuSystem::DisplayMenu() {
                     MenuSystem.bEnableCoords = 0;
                     MenuSystem.bEnableDebugMenu = 0;
 
-                    CHud::SetHelpMessage((const GtaChar*)L"Player Coords disabled", 1, 0, 1);
+                    CHud::SetHelpMessage(L"Player Coords disabled", 1 != 0, 0 != 0);
                 }
                 else {
                     MenuSystem.bEnableCoords = 1;
                     MenuSystem.bEnableDebugMenu = 0;
 
-                    CHud::SetHelpMessage((const GtaChar*)L"Player Coords enabled", 1, 0, 1);
+                    CHud::SetHelpMessage(L"Player Coords enabled", 1 != 0, 0 != 0);
                 }
             }
         }
@@ -540,82 +532,6 @@ void CMenuSystem::DrawPermanentText() {
         CFont::PrintString(SCREEN_COORD_LEFT(20.0f), SCREEN_COORD_TOP(20.0f), gString);
 }
 
-void CMenuSystem::AirbreakMode() {
-    CPed *player = FindPlayerPed();
-    CPad *pad = CPad::GetPad(0);
-    CVector Forward;
-    CVector Up;
-    CVector Down;
-    float angle = FindPlayerHeading();
-    static bool restore;
-    static bool set;
-
-    // Set Mode
-    if (MenuSystem.bEnableTimeStopper) {  
-        Forward = FindPlayerPed()->m_placement * CVector(0, 2.0f, 0);
-        Up = FindPlayerPed()->m_placement * CVector(0, 0.0f, 2.0f);
-        Down = FindPlayerPed()->m_placement * CVector(0, 0.0f, -2.0f);
-
-        *(float*)0x68F5F0 = 0.0f; // Set game gravity to 0.
-
-        if (CPad::NewKeyState.num8) { // Forward
-            player->Teleport(Forward);
-        }
-
-        if (CPad::NewKeyState.num9) { // Up
-            player->Teleport(Up);
-        }
-
-        else if (CPad::NewKeyState.num3) { // Down
-            player->Teleport(Down);
-        }
-
-        if (CPad::NewKeyState.num4) // Rotate left
-            angle += 0.133f;
-        else if (CPad::NewKeyState.num6) // Rotate right
-            angle -= 0.133f;
-
-        player->m_placement.SetHeading(angle);
-        FindPlayerPed()->WorkOutHeadingForMovingFirstPerson(angle);
-
-        restore = false;
-
-        char DisableKey = plugin::KeyPressed(VK_RETURN);
-
-        if (DisableKey) {
-            MenuSystem.bEnableTimeStopper = 0;
-        }
-    }
-    else {
-        if (!restore) {
-            FindPlayerPed()->RestorePreviousState();
-            FindPlayerPed()->Idle();
-
-            *(float*)0x68F5F0 = 0.0080000004f; // Reset default game gravity
-
-            restore = true;
-        }
-
-        set = false;
-    }
-}
-
-void CMenuSystem::SetTime() {
-    static bool restore;
-
-    if (MenuSystem.bEnableSetTime) {
-
-        restore = false;
-    }
-    else {
-        if (!restore) {
-
-            CHud::SetHelpMessage((const GtaChar*)L"", 1, 0, 0);
-
-            restore = true;
-        }
-    }
-}
 
 void CMenuSystem::DrawSelectedMenuItem(int slotId) {
     // Set selected menu item
