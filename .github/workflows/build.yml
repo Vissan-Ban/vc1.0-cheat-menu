@@ -1,0 +1,62 @@
+name: Build VC 1.0 Cheat Menu
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [ main ]
+    paths:
+      - "src/**"
+      - ".github/workflows/build.yml"
+      - "README.md"
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: windows-2022
+    steps:
+      - name: Checkout project
+        uses: actions/checkout@v4
+
+      - name: Checkout Plugin-SDK
+        uses: actions/checkout@v4
+        with:
+          repository: DK22Pac/plugin-sdk
+          ref: master
+          path: plugin-sdk
+          submodules: recursive
+
+      - name: Set up MSBuild
+        uses: microsoft/setup-msbuild@v2
+
+      - name: Generate Plugin-SDK solution
+        shell: cmd
+        run: |
+          set PLUGIN_SDK_DIR=%GITHUB_WORKSPACE%\plugin-sdk
+          call plugin-sdk\tools\generate\Visual Studio.bat
+
+      - name: Build Vice City SDK libraries
+        shell: cmd
+        run: |
+          set PLUGIN_SDK_DIR=%GITHUB_WORKSPACE%\plugin-sdk
+          msbuild plugin-sdk\plugin.slnx /m /verbosity:minimal /p:Configuration=zDebug /p:Platform="Mixed Platforms" /t:plugin_vc
+
+      - name: Build Cheat Menu (Win32 Release)
+        shell: cmd
+        run: |
+          msbuild src\cheats-menu.vcxproj /m /verbosity:minimal /p:Configuration=Release /p:Platform=Win32 /p:PluginSdkDir="%GITHUB_WORKSPACE%\plugin-sdk"
+
+      - name: Verify output
+        shell: pwsh
+        run: |
+          $asi = Get-ChildItem -Path output -Filter CheatsMenu.asi -Recurse
+          if (-not $asi) { throw "CheatsMenu.asi was not produced." }
+          Get-Item $asi.FullName | Format-List FullName,Length,LastWriteTime
+
+      - name: Upload ASI artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: CheatsMenu-Win32-Release
+          path: output/asi/CheatsMenu.asi
+          if-no-files-found: error
