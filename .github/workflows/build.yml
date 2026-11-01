@@ -34,7 +34,7 @@ jobs:
         shell: cmd
         run: |
           set PLUGIN_SDK_DIR=%GITHUB_WORKSPACE%\plugin-sdk
-          call plugin-sdk\tools\generate\Visual Studio.bat
+          call "plugin-sdk\tools\generate\Visual Studio.bat"
 
       - name: Build Vice City SDK libraries
         shell: cmd
