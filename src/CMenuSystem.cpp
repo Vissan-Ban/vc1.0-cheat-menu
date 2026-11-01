@@ -26,10 +26,10 @@ wchar_t *pText0, *pText1, *pText2, *pText3, *pText4, *pText5, *pText6, *pText7, 
 
 void CMenuSystem::InjectPatches() {
     plugin::Events::drawHudEvent += [] {
-        CMenuSystem::DisplayMenu;
-        CMenuSystem::DrawPermanentText;
-        CMenuSystem::AirbreakMode;
-        CMenuSystem::SetTime;
+        CMenuSystem::DisplayMenu();
+        CMenuSystem::DrawPermanentText();
+        CMenuSystem::AirbreakMode();
+        CMenuSystem::SetTime();
     };
 }
 
@@ -396,12 +396,12 @@ void CMenuSystem::DisplayMenu() {
             //
             if (MenuSystem.lineID == 0 && ActiveKey) {
                 MenuSystem.bEnableDebugMenu = 0;
+                CTimer::ms_fTimeScale = 1.5f;
 
                 CHud::SetHelpMessage((const GtaChar*)L"Time Faster Enabled", 0, 0, 1);
             }
             else if (MenuSystem.lineID == 1 && ActiveKey) {
                 MenuSystem.bEnableDebugMenu = 0;
-                CTimer::ms_fTimeScale = 1.0f;
                 CTimer::ms_fTimeScale = 1.5f;
 
                 CHud::SetHelpMessage((const GtaChar*)L"Time Normal Enabled", 0, 0, 1);
@@ -524,7 +524,7 @@ void CMenuSystem::DrawPermanentText() {
     swprintf(gString, L"X = %.3f     Y = %.3f     Z = %.3f     ANGLE = %.3f", coords.x, coords.y, coords.z, angle);
 
     CFont::SetPropOn();
-    CFont::SetRightJustifyOff;
+    CFont::SetRightJustifyOff();
     CFont::SetCentreOff();
     CFont::SetJustifyOn();
     CFont::SetColor(CRGBA(255, 255, 255, 255));
@@ -558,21 +558,21 @@ void CMenuSystem::AirbreakMode() {
 
         *(float*)0x68F5F0 = 0.0f; // Set game gravity to 0.
 
-        if (pad->CurrentKeyState.num8) { // Forward
+        if (CPad::NewKeyState.num8) { // Forward
             player->Teleport(Forward);
         }
 
-        if (pad->CurrentKeyState.num9) { // Up
+        if (CPad::NewKeyState.num9) { // Up
             player->Teleport(Up);
         }
 
-        else if (pad->CurrentKeyState.num3) { // Down
+        else if (CPad::NewKeyState.num3) { // Down
             player->Teleport(Down);
         }
 
-        if (pad->CurrentKeyState.num4) // Rotate left
+        if (CPad::NewKeyState.num4) // Rotate left
             angle += 0.133f;
-        else if (pad->CurrentKeyState.num6) // Rotate right
+        else if (CPad::NewKeyState.num6) // Rotate right
             angle -= 0.133f;
 
         player->m_placement.SetHeading(angle);
