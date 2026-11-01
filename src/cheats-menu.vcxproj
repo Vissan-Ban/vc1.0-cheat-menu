@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="Current" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{C0F6617D-112F-47D7-8AE5-F9D70C02B1AD}</ProjectGuid>
+    <Keyword>Win32Proj</Keyword>
+    <RootNamespace>CheatsMenu</RootNamespace>
+    <ProjectName>CheatsMenu</ProjectName>
+    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v143</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <PropertyGroup>
+    <PluginSdkDir Condition="'$(PluginSdkDir)'==''">$(MSBuildThisFileDirectory)..\plugin-sdk</PluginSdkDir>
+    <OutDir>$(MSBuildThisFileDirectory)..\output\asi\</OutDir>
+    <IntDir>$(MSBuildThisFileDirectory)..\output\obj\$(Configuration)\</IntDir>
+    <TargetName>CheatsMenu</TargetName>
+    <TargetExt>.asi</TargetExt>
+  </PropertyGroup>
+  <ItemDefinitionGroup>
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;_CRT_NON_CONFORMING_SWPRINTFS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(PluginSdkDir)\plugin_vc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalLibraryDirectories>$(PluginSdkDir)\output\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>plugin_vc.lib;paths.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="CMenuSystem.cpp" />
+    <ClCompile Include="Main.cpp" />
+    <ClCompile Include="Settings.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="CMenuSystem.h" />
+    <ClInclude Include="Settings.h" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+</Project>
