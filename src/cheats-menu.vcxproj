@@ -37,7 +37,7 @@
       <SDLCheck>true</SDLCheck>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <LanguageStandard>stdcpplatest</LanguageStandard>
-      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;_CRT_NON_CONFORMING_SWPRINTFS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>RW;GTAVC;_CRT_SECURE_NO_WARNINGS;_CRT_NON_CONFORMING_SWPRINTFS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>$(PluginSdkDir)\plugin_vc;$(PluginSdkDir)\plugin_vc\game_vc;$(PluginSdkDir)\plugin_vc\game_vc\enums;$(PluginSdkDir)\plugin_vc\game_vc\rw;$(PluginSdkDir)\shared;$(PluginSdkDir)\shared\game;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
