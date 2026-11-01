@@ -40,7 +40,7 @@ public:
 
 public:
     static void DrawSelectedMenuItem(int slotId);
-    static void AddString(wchar_t * nString, int nLine);
+    static void AddString(const wchar_t * nString, int nLine);
     static void DrawPermanentText();
     static void AirbreakMode();
     static void SetTime();
