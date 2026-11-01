@@ -40,7 +40,7 @@ jobs:
         shell: cmd
         run: |
           set PLUGIN_SDK_DIR=%GITHUB_WORKSPACE%\plugin-sdk
-          msbuild plugin-sdk\plugin.slnx /m /verbosity:minimal /p:Configuration=zDebug /p:Platform="Mixed Platforms" /t:plugin_vc
+          msbuild plugin-sdk\plugin.slnx /m /verbosity:minimal /p:Configuration=zRelease /p:Platform="Mixed Platforms" /t:plugin_vc
 
       - name: Build Cheat Menu (Win32 Release)
         shell: cmd
