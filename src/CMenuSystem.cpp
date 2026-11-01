@@ -22,7 +22,7 @@ int nActiveMenuItem = 0;
 CRGBA selectedMenuItem = { 255, 149, 223, 255 };
 CRGBA unselectedMenuItem = { 205, 205, 205, 255 };
 
-wchar_t *pText0, *pText1, *pText2, *pText3, *pText4, *pText5, *pText6, *pText7, *pText8, *pText9, *pText10;
+const wchar_t *pText0, *pText1, *pText2, *pText3, *pText4, *pText5, *pText6, *pText7, *pText8, *pText9, *pText10;
 
 void CMenuSystem::InjectPatches() {
     plugin::Events::drawHudEvent += [] {
@@ -36,20 +36,20 @@ void CMenuSystem::DisplayMenu() {
     CPad *pad = CPad::GetPad(0);
 
     // ID: 0 - 10
-    wchar_t* Header[11]{ L"Cheats", L"Weapons", L"Weather", L"Wanted Level", L"Time Cheats", L"Ped Cheats", L"Vehicle Cheats", L"Spawn Vehicles", L"Player Cheats", L"Gang Cheats", L"Miscellaneous" };
+    const wchar_t* Header[11]{ L"Cheats", L"Weapons", L"Weather", L"Wanted Level", L"Time Cheats", L"Ped Cheats", L"Vehicle Cheats", L"Spawn Vehicles", L"Player Cheats", L"Gang Cheats", L"Miscellaneous" };
 
     // ID: 0 - 9 Where 0 is first menu option.
-    wchar_t* Page0Lines[10]{ L"Weapons", L"Weather", L"Wanted Level", L"Time Cheats", L"Ped Cheats", L"Vehicle Cheats", L"Spawn Vehicles", L"Player Cheats", L"Gang Cheats", L"Miscellaneous" };
+    const wchar_t* Page0Lines[10]{ L"Weapons", L"Weather", L"Wanted Level", L"Time Cheats", L"Ped Cheats", L"Vehicle Cheats", L"Spawn Vehicles", L"Player Cheats", L"Gang Cheats", L"Miscellaneous" };
 
     // ID: 1 - 9 Where 1 is first menu option.
-    wchar_t* Page1Lines[10]{ L"Get Weapon Set 1", L"Get Weapon Set 2", L"Get Weapon Set 3", L"Unused", L"Unused", L"Unused", L"Unused", L"Unused", L"Unused", L"Unused"};
-    wchar_t* Page3Lines[10]{ L"Faster", L"Normal", L"Slower", L"Unused", L"Unused", L"Unused", L"Unused", L"Unused", L"Unused", L"Unused" };
-    wchar_t* Page9Lines[10]{ L"Show player coords", L"Unused", L"Unused", L"Unused", L"Unused", L"Unused", L"Unused", L"Unused", L"Unused", L"Unused" };
+    const wchar_t* Page1Lines[10]{ L"Get Weapon Set 1", L"Get Weapon Set 2", L"Get Weapon Set 3", L"Unused", L"Unused", L"Unused", L"Unused", L"Unused", L"Unused", L"Unused"};
+    const wchar_t* Page3Lines[10]{ L"Faster", L"Normal", L"Slower", L"Unused", L"Unused", L"Unused", L"Unused", L"Unused", L"Unused", L"Unused" };
+    const wchar_t* Page9Lines[10]{ L"Show player coords", L"Unused", L"Unused", L"Unused", L"Unused", L"Unused", L"Unused", L"Unused", L"Unused", L"Unused" };
 
     char EnableKey = plugin::KeyPressed(VK_F4);
     char DisableKey = plugin::KeyPressed(VK_RETURN);
 
-    if (FrontendMenuManager.m_bMenuVisible)
+    if (FrontEndMenuManager.m_bMenuActive)
         MenuSystem.bEnableDebugMenu = 0;
 
     if (!MenuSystem.bEnableDebugMenu && EnableKey && CTimer::m_snTimeInMilliseconds > (nTimeMenu + 1000)) {
@@ -292,7 +292,7 @@ void CMenuSystem::DisplayMenu() {
                 CStreaming::RequestModel(276, 1);
                 CStreaming::RequestModel(285, 1);
                 CStreaming::RequestModel(288, 1);
-                CStreaming::LoadAllRequestedModels(0, 0);
+                CStreaming::LoadAllRequestedModels(false);
                 FindPlayerPed()->GiveWeapon((eWeaponType)1, 10, 1);
                 FindPlayerPed()->GiveWeapon((eWeaponType)6, 1, 1);
                 FindPlayerPed()->GiveWeapon((eWeaponType)15, 10, 1);
@@ -602,7 +602,7 @@ void CMenuSystem::DrawSelectedMenuItem(int slotId) {
     };
 }
 
-void CMenuSystem::AddString(wchar_t *nString, int nLine) {
+void CMenuSystem::AddString(const wchar_t *nString, int nLine) {
     CFont::SetPropOn();
     CFont::SetRightJustifyOff();
     CFont::SetCentreOn();
