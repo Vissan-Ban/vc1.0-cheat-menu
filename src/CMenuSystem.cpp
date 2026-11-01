@@ -106,7 +106,7 @@ void CMenuSystem::DisplayMenu() {
         CFont::SetCentreOff();
         CFont::SetBackgroundOff();
         CFont::SetJustifyOn();
-        CFont::SetFontStyle(FONT_PRICEDOWN);
+        CFont::SetFontStyle(FONT_HEADING);
         CFont::SetScale(SCREEN_MULTIPLIER(1.89f), SCREEN_MULTIPLIER(3.89f));
         CFont::SetColor(CRGBA(0, 0, 0, 255));
         CFont::SetDropColor(CRGBA(0, 0, 0, 255));
