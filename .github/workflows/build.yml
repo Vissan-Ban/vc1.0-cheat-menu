@@ -35,7 +35,7 @@ jobs:
         shell: cmd
         run: |
           set PLUGIN_SDK_DIR=%GITHUB_WORKSPACE%\plugin-sdk
-          call "plugin-sdk\tools\generate\Visual Studio.bat"
+          "%GITHUB_WORKSPACE%\plugin-sdk\tools\premake\premake5" vs2022 --file="%GITHUB_WORKSPACE%\plugin-sdk\tools\premake\premake5.lua"
 
       - name: Build Vice City SDK libraries
         shell: cmd
